@@ -42,13 +42,22 @@ div.footer
 h1.maintitle
 	{
 	float:left;
+	margin-top:16px;
 	margin-left:16px;
 	color:white;
 	}
 
-p.loginbar
+.loginbar
 	{
+	font-size:small;
 	float:right;
 	margin-right:16px;
+	margin-top:16px;
 	color:white;
+	}
+	
+p.error
+	{
+	font-size:large;
+	color:red;
 	}

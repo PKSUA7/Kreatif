@@ -15,13 +15,13 @@ class user
 		if (!$res || mysql_num_rows($res)==0) {return false;}
 		$user = mysql_fetch_array($res);
 		if ($user['password']!=$password) {return false;}
-		return new user($user['mail'],$user['name'],$user['address'],$user['zip_code'],$user['is_admin']);
+		return new user($user['mail'],$user['user_name'],$user['address'],$user['zip_code'],$user['is_admin']);
 		}
 	
-	public function __construct($email, $name,$address,$zip,$isAdmin)
+	public function __construct($email, $user_name,$address,$zip,$isAdmin)
 		{
         $this->email = $email;
-		$this->name = $name;
+		$this->name = $user_name;
 		$this->address = $address;
 		$this->zip = $zip;
 		$this->isAdmin = $isAdmin;
