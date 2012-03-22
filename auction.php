@@ -12,7 +12,7 @@ if (!$auction)
 	exit();
 	}
 $includes = "<link rel=\"stylesheet\" type=\"text/css\" href=\"css/auction.css\" />";
-echoStart("Kreatif - Index", $includes);
+echoStart("Kreatif - ".$auction->getName(), $includes);
 include("view/AuctionView.php");
 echoAuctionPage($auction);
 echoEnd();

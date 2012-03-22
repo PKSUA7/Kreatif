@@ -1,6 +1,49 @@
 div.auctionbox
 	{
-	width:128px;
-	border: 1px solid;
+	width:196px;
+	border:1px solid;
 	text-align:center;
+	color:black;
+	}
+
+div.timebox
+	{
+	display:inline-block;
+	border:1px solid;
+	color:black;
+	margin-bottom:4px;
+	}
+
+div.maintimebox
+	{
+	background:#2288AA;
+	color:white;
+	font-size:large;
+	float:right;
+	padding:4px;
+	}
+
+div.description
+	{
+	margin-bottom:32px;
+	}
+
+h1.header
+	{
+	margin-bottom:0px;
+	}
+
+h6.artist
+	{
+	margin-top:0px;
+	font-weight:normal;
+	}
+
+div.price
+	{
+	background:#2288AA;
+	color:white;
+	font-size:xx-large;
+	float:right;
+	padding:4px;
 	}

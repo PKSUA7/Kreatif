@@ -16,6 +16,11 @@ else
 		case 1:
 			echo "Auktionen findes ikke eller er udløbet.";
 			break;	
+		case 2:
+			echo "Dit bud var for lavt.<br />";
+			echo "En anden har måske budt lige inden dig.<br />";
+			echo "<a href='auction.php?auctionid=".$_GET['auctionid']."'>Klik her for at vende tilbage til auktionen.</a>";
+			break;
 		}
 	}
 echo "</p>";
