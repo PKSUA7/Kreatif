@@ -1,7 +1,7 @@
 <?php
 include("controller/MainInclude.php");
-echoStart("Kreatif - Index");
-//echo "Indhold her";
+$includes = "<link rel=\"stylesheet\" type=\"text/css\" href=\"css/auction.css\" />";
+echoStart("Kreatif - Index", $includes);
 $auctions = auction::getAuctions();
 if (count($auctions)==0)
 	{
@@ -9,7 +9,8 @@ if (count($auctions)==0)
 	}
 else
 	{
-	//echo auktions oversigt
+	include("view/AuctionView.php");
+	echoAuctionBoxes($auctions);
 	}
 echoEnd();
 ?>

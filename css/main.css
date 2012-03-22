@@ -4,6 +4,10 @@ body
 	font-family:Verdana
 	}
 
+img {
+	border: none
+	}
+
 div.header
 	{
 	width:100%;

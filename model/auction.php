@@ -14,7 +14,7 @@ class auction
 		$res = mysql_query("SELECT * ".
 							"FROM auction ".
 							"WHERE auction_id=$ID");
-		if (!$res) {return false;}
+		if (!$res || mysql_num_rows($res)==0) {return false;}
 		$auction = mysql_fetch_array($res);
 		$price = $auction['start_price'];
 		$res = mysql_query("SELECT MAX(amount) AS price ".
@@ -25,7 +25,7 @@ class auction
 			$newPrice = mysql_fetch_array($res);
 			$price = $newPrice['price'];
 			}
-		return new auction($ID,$auction['name'],$auction['start_date'],
+		return new auction($ID,$auction['product_name'],$auction['start_date'],
 					$auction['end_date'],$price,$auction['product_desc']);
 		}
 		
@@ -33,11 +33,11 @@ class auction
 		{
 		$res = mysql_query("SELECT auction_id AS id ".
 							"FROM auction ".
-							"WHERE end_date<now() and start_date>now()");
+							"WHERE end_date>now() and start_date<now()");
 		$result = array();
 		while ($row = mysql_fetch_array($res))
 			{
-			$result[] = getAuction($row['id']);
+			$result[] = auction::getAuction($row['id']);
 			}
 		return $result;
 		}
@@ -97,6 +97,11 @@ class auction
 			$result[] = $row;
 			}
 		return $result;
+		}
+		
+	public function getFrontImage()
+		{
+		return null;
 		}
 	}
 ?>
