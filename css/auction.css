@@ -4,6 +4,8 @@ div.auctionbox
 	border:1px solid;
 	text-align:center;
 	color:black;
+	float:left;
+	margin-right:32px;
 	}
 
 div.timebox

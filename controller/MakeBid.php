@@ -1,10 +1,10 @@
 <?php
-include("MainInclude.php");
 if (!isset($_GET['auctionid']))
 	{
 	header("location:../index.php");
 	exit();
 	}
+include("MainInclude.php");
 $auction = mysql_real_escape_string($_GET['auctionid']);
 if (isset($_SESSION['user']))
 	{
@@ -22,6 +22,9 @@ if (isset($_SESSION['user']))
 		exit(mysql_error());
 		}
 	}
-
+else
+	{
+	//håndter ikke logget ind bruger
+	}
 header("location:../auction.php?auctionid=$auction");
 ?>

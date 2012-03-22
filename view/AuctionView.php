@@ -11,7 +11,7 @@ function echoAuctionBox($auction)
 	echo $auction->getPrice()." kr.<br />";
 	echo "Udløber: <br />";
 	echo "<div class='timebox'>";
-	echo $diff->d." dage, ".$diff->h.":".$diff->i.":".$diff->s;
+	echo $diff->d." dage, ".timeToString($diff->h, $diff->i, $diff->s);
 	echo "</div>";
 	echo "</div></a>";
 	}
@@ -36,7 +36,7 @@ function echoAuctionPage($auction)
 	$diff = $end->diff(new DateTime());
 	echo "<div class='maintimebox'>";
 	echo "Udløber: <br />";
-	echo $diff->d." dage, ".$diff->h.":".$diff->i.":".$diff->s;
+	echo $diff->d." dage, ".timeToString($diff->h, $diff->i, $diff->s);
 	echo "</div>";
 	
 	echo "<div class='description'>".$auction->getDescription()."</div>";
@@ -76,5 +76,17 @@ function echoBids($auction)
 		array_map("echoBid",$bids);
 		echo "</table>";
 		}
+	}
+	
+function timeToString($h,$i,$s)
+	{
+	$time = "";
+	if ($h<9) {$time.="0";}
+	$time.=$h.":";
+	if ($i<9) {$time.="0";}
+	$time.=$i.":";
+	if ($s<9) {$time.="0";}
+	$time.=$s;
+	return $time;
 	}
 ?>
