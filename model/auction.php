@@ -9,6 +9,7 @@ class auction
 	private $price;
 	private $bidPercent;
 	private $artist;
+	private $noBids;
 	
 	public static function getAuction($ID)
 		{
@@ -19,6 +20,7 @@ class auction
 		if (!$res || mysql_num_rows($res)==0) {return false;}
 		$auction = mysql_fetch_array($res);
 		$price = $auction['start_price'];
+		$noBids=true;
 		$res = mysql_query("SELECT MAX(amount) AS price ".
 							"FROM bid ".
 							"WHERE auction_id=$ID");
@@ -28,6 +30,7 @@ class auction
 			if ($newPrice['price']!=null)
 				{
 				$price = $newPrice['price'];
+				$noBids=false;
 				}
 			}
 		return new auction($ID,$auction['product_name'],$auction['start_date'],
@@ -115,14 +118,36 @@ class auction
 		
 	public function getFrontImage()
 		{
-		return null;
+		$result = null;
+		$res = mysql_query("SELECT thumb_url FROM gallery WHERE auction_id='".
+							$this->ID."' AND is_front='1'");
+		if (mysql_num_rows($res)>0)
+			{
+			$result=mysql_fetch_array($res);
+			$result = $result['thumb_url'];
+			}
+		return $result;
+		}
+	
+	public function getImages()
+		{
+		$result = array();
+		$res = mysql_query("SELECT picture_url, thumb_url ".
+						"FROM gallery ".
+						"WHERE auction_id='".$this->ID."'");
+		while ($row=mysql_fetch_array($res))
+			{
+			$image = array('picture'=>$row['picture_url'],'thumb'=>$row['thumb_url']);
+			$result[] = $image;
+			}
+		return $result;
 		}
 		
 	public function getPossibleBids()
 		{
 		$bid = $this->price*$this->bidPercent;
 		$result = array();
-		for ($i=1;$i<11;$i++)
+		for ($i=($noBids=true?0:1);$i<=10;$i++)
 			{
 			$result[] = round($this->price+$bid*$i);
 			}

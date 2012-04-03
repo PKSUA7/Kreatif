@@ -31,13 +31,9 @@ function echoAuctionPage($auction)
 	
 	echo "<h1 class='header'>".$auction->getName()."</h1>";
 	echo "<h6 class='artist'>Skabt af: ".$auction->getArtistName()."</h5>";
+	echoGallery($auction);
 	
-	$end = new DateTime($auction->getEndDate());
-	$diff = $end->diff(new DateTime());
-	echo "<div class='maintimebox'>";
-	echo "Udløber: <br />";
-	echo $diff->d." dage, ".timeToString($diff->h, $diff->i, $diff->s);
-	echo "</div>";
+	echoAuctionTime($auction);
 	
 	echo "<div class='description'>".$auction->getDescription()."</div>";
 	
@@ -53,6 +49,28 @@ function echoAuctionPage($auction)
 	echo "</form>";
 	}
 
+function echoAuctionTime($auction)
+	{
+	$end = new DateTime($auction->getEndDate());
+	$diff = $end->diff(new DateTime());
+	echo "<div class='maintimebox'>";
+	echo "Udløber: <br />";
+	echo $diff->d." dage, ".timeToString($diff->h, $diff->i, $diff->s);
+	echo "</div>";
+	}
+	
+function echoGallery($auction)
+	{
+	$images =  $auction->getImages();
+	
+	foreach ($images as $image)
+		{
+		echo "<a href='$image[picture]' rel='lightbox[gallery]'>".
+			"<img src='$image[thumb]'/>".
+			"</a>";
+		}
+	}
+	
 function echoBid($bid)
 	{
 	echo "<tr>";
