@@ -147,7 +147,7 @@ class auction
 		{
 		$bid = $this->price*$this->bidPercent;
 		$result = array();
-		for ($i=($noBids=true?0:1);$i<=10;$i++)
+		for ($i=($noBids==true?0:1);$i<=10;$i++)
 			{
 			$result[] = round($this->price+$bid*$i);
 			}
