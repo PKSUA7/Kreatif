@@ -35,7 +35,7 @@ class auction
 			}
 		return new auction($ID,$auction['product_name'],$auction['start_date'],
 					$auction['end_date'],$price,$auction['product_desc'],
-					$auction['bid_percent'],$auction['artist_name']);
+					$auction['bid_percent'],$auction['artist_name'],$noBids);
 		}
 		
 	public static function getAuctions()
@@ -53,7 +53,7 @@ class auction
 	
 	public function __construct($ID, $name, $startDate, $endDate,
 									$price, $description, $bidPercent,
-									$artist)
+									$artist, $noBids)
 		{
         $this->ID = $ID;
 		$this->name = $name;
@@ -63,6 +63,7 @@ class auction
 		$this->description = $description;
 		$this->bidPercent = $bidPercent;
 		$this->artist = $artist;
+		$this->noBids = $noBids;
 		}
 	
 	public function getID()
@@ -147,7 +148,7 @@ class auction
 		{
 		$bid = $this->price*$this->bidPercent;
 		$result = array();
-		for ($i=($noBids==true?0:1);$i<=10;$i++)
+		for ($i=($this->noBids==true?0:1);$i<=10;$i++)
 			{
 			$result[] = round($this->price+$bid*$i);
 			}
