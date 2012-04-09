@@ -9,8 +9,9 @@ if (!isset($_SESSION['user']))
 	E-Mail: <input type="text" name="email" />
 	Adgangskode: <input type="password" name="pass" />
 	<input type="submit" value="Log ind"  name="submit"/>
+	<a href="newuser.php">Opret bruger</a>
 	</form>
-
+	
 <?php }
 else 
 	{
