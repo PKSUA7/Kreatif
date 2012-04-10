@@ -9,8 +9,9 @@ if (isset($_POST['submit']))
 	if (strlen($password)<8) {return;}
 	if (!preg_match("/^\w+@(\w+.)+\w+/", $mail)) {return;}
 	if (!preg_match("/^([A-Za-z]| )+/",$username)) {return;}
-	if (!preg_match("/^([A-Za-z]| )+/",$username)) {return;}
 	if (!preg_match("/^([A-Za-z0-9\!\-\_\,\.\*\?])+/",$password)) {return;}
+	$res = mysql_query("SELECT mail FROM user WHERE mail='$mail'");
+	if (!$res||mysql_num_rows($res)>0) {return;}
 	mysql_query("INSERT INTO user(mail, user_name, password) ".
 				"VALUES ('$mail','$username','".hash('sha256', $password)."')");
 	$_SESSION['user'] = user::getUser($mail, $password);
