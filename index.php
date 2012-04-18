@@ -1,5 +1,6 @@
 <?php
 //test2
+//test
 include("controller/MainInclude.php");
 $includes = "<link rel=\"stylesheet\" type=\"text/css\" href=\"css/auction.css\" />";
 echoStart("Kreatif - Index", $includes);
