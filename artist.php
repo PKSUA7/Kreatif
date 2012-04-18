@@ -16,6 +16,7 @@ if (isset($_GET['artist']))
 	$auctions = auction::getArtistAuctions($row['artist_name']);
 	
 	$includes = "<link rel='stylesheet' type='text/css' href='css/artist.css' />";
+	$includes .= "<link rel=\"stylesheet\" type=\"text/css\" href=\"css/auction.css\" />";
 	echoStart("Kreatif - $row[artist_name]",$includes);
 	
 	echo "<img src='$row[picture_url]'/>";

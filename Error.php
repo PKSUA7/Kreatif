@@ -24,6 +24,9 @@ else
 		case 3:
 			echo "Kunstneren blev ikke fundet.";
 			break;	
+		case 4:
+			echo "Du skal være logget ind for at byde.";
+			break;
 		}
 	}
 echo "</p>";

@@ -11,7 +11,7 @@ function echoAuctionBox($auction)
 	echo $auction->getPrice()." kr.<br />";
 	echo "Udløber: <br />";
 	echo "<div class='timebox'>";
-	echo $diff->d." dage, ".timeToString($diff->h, $diff->i, $diff->s);
+	echo getTimeLeft($auction);
 	echo "</div>";
 	echo "</div></a>";
 	}
@@ -33,7 +33,7 @@ function echoAuctionPage($auction)
 	echoArtist($auction);
 	echoGallery($auction);
 	
-	echoAuctionTime($auction);
+	$isActive = echoAuctionTime($auction);
 	
 	echo "<div class='description'>".$auction->getDescription()."</div>";
 	
@@ -41,12 +41,15 @@ function echoAuctionPage($auction)
 	echo "<br />";
 	
 	echo "<form action='controller/MakeBid.php?auctionid=".$auction->getID()."' method='post'>";
-	echo "Dit bud:<br />";
-	echo "i alt <select name='bidchoice'>";
-	array_map("echoOptions",$auction->getPossibleBids());
-	echo "</select> kr.";
-	echo "<br /><input type='submit' name='submit' value='byd'/>";
-	echo "</form>";
+	if ($isActive)
+		{
+		echo "<h3>Dit bud:</h3>";
+		echo "I alt <select name='bidchoice'>";
+		array_map("echoOptions",$auction->getPossibleBids());
+		echo "</select> kr.";
+		echo "<br /><input type='submit' name='submit' value='byd'/>";
+		echo "</form>";
+		}
 	}
 
 function echoArtist($auction)
@@ -63,8 +66,10 @@ function echoAuctionTime($auction)
 	$diff = $end->diff(new DateTime());
 	echo "<div class='maintimebox'>";
 	echo "Udløber: <br />";
-	echo $diff->d." dage, ".timeToString($diff->h, $diff->i, $diff->s);
+	$timeLeft=getTimeLeft($auction);
+	echo $timeLeft;
 	echo "</div>";
+	return $timeLeft!="Udløbet";
 	}
 	
 function echoGallery($auction)
@@ -79,9 +84,9 @@ function echoGallery($auction)
 		}
 	}
 	
-function echoBid($bid)
+function echoBid($bid, $style)
 	{
-	echo "<tr>";
+	echo "<tr class='$style'>";
 	echo "<td>".$bid['user_name']."</td>";
 	echo "<td>".$bid['amount']." kr.</td>";
 	echo "</tr>";
@@ -90,18 +95,36 @@ function echoBid($bid)
 function echoBids($auction)
 	{
 	$bids = $auction->getBids();
-	echo "Tidligere bud:</br>";
+	echo "<h3>Tidligere bud:</h3>";
 	if (count($bids)==0)
 		{
 		echo "Ingen bud endnu.<br />";
 		}
 	else
 		{
-		echo "<table border='1'>";
-		echo "<tr><td>Bruger</td><td>Bud</td></tr>";
-		array_map("echoBid",$bids);
+		echo "<table BORDER=1 CELLPADDING=3 CELLSPACING=1 
+    			RULES=COLS FRAME=BOX>";
+		echo "<tr><th>Bruger</th><th>Bud</th></tr>";
+		$i=0;
+		foreach($bids as $bid)
+			{
+			echoBid($bid,$i==0?"one":"two");
+			$i=($i+1) % 2;
+			}
 		echo "</table>";
 		}
+	}
+	
+function getTimeLeft($auction)
+	{
+	$end = new DateTime($auction->getEndDate());
+	$now = new DateTime();
+	if ($end<$now)
+		{
+		return "Udløbet";
+		}
+	$diff = $end->diff($now);
+	return $diff->d." dage, ".timeToString($diff->h, $diff->i, $diff->s);
 	}
 	
 function timeToString($h,$i,$s)
@@ -117,27 +140,41 @@ function timeToString($h,$i,$s)
 	}
 
 // Peter, bare lige så du ved det er mig der har gjort noget godt/skidt herfra ;)
-function echoAuctionRow($auction)
-{
-echo 	"<tr>";
-echo		"<td>" . $auction->getName() . "</td>";
-echo		"<td>" . $auction->getStartDate() . "</td>";
-echo		"<td>" . $auction->getEndDate() . "</td>";
-echo		"<td>" . $auction->getPrice() . "</td>";
-echo		"<td>" . $auction->getArtistName() . "</td>";
-echo	"</tr>";	
-}
+function echoAuctionRow($auction, $style)
+	{
+	echo "<tr class='$style'>";
+		echo "<td>";
+		echo "<a href='auction.php?auctionid=".$auction->getID()."'>";
+		echo $auction->getName();
+		echo "</a></td>";
+		echo "<td>" . date_format(new DateTime($auction->getStartDate()),"d-m-Y H:i:s") . "</td>";
+		echo "<td>" . getTimeLeft($auction) . "</td>";
+		echo "<td>" . $auction->getPrice() . "</td>";
+		echo "<td>";
+		echo "<a href='artist.php?artist=".$auction->getArtistName()."'>";
+		echo $auction->getArtistName();
+		echo "</a></td>";
+	echo "</tr>";	
+	}
 
-function echoAuctionTable($auctions){
-	
-	echo '<center><table border=1>
-						<tr><th>autionName</th>
-						<th>Start Date</th>
-						<th>End date</th>
-						<th>Start Price</th>
-						<th>Artist</th>
-		</center>';
-	array_map("echoAuctionRow", $auctions);
+function echoAuctionTable($auctions)
+	{
+	echo "<h3>Auktioner:</h3>";
+	echo "<table BORDER=1 CELLPADDING=3 CELLSPACING=1 
+    			RULES=COLS FRAME=BOX>
+						<tr>
+							<th>Produkt</th>
+							<th>Start</th>
+							<th>Slut</th>
+							<th>Nuværende pris</th>
+							<th>Kunstner</th>
+						</tr>";
+	$i=0;
+	foreach ($auctions as $auction)
+		{
+		echoAuctionRow($auction,$i==0?"one":"two");
+		$i=($i+1) % 2;
+		}
 	echo "</table>";	
-}
+	}
 ?>

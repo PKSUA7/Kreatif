@@ -30,7 +30,8 @@ if (isset($_SESSION['user']))
 	}
 else
 	{
-	//håndter ikke logget ind bruger
+	header("location:../error.php?error=4");
+	exit();
 	}
 header("location:../auction.php?auctionid=$auction");
 ?>
