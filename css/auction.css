@@ -1,11 +1,13 @@
 div.auctionbox
 	{
 	width:196px;
+	height:164px;
 	border:1px solid;
 	text-align:center;
 	color:black;
 	float:left;
 	margin-right:32px;
+	margin-bottom:32px;
 	}
 
 div.timebox

@@ -4,6 +4,7 @@
 	if (isset($_SESSION['user']) && $_SESSION['user']->isAdmin())
 		{?>
 		<a href="newauction.php">Opret auktion</a><br />
+		<a href="auctionoverview.php">Auktionsoversigt</a><br />
 		<?php
 		}?>
 </div>

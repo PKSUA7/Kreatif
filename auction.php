@@ -1,11 +1,14 @@
 <?php
 include("controller/MainInclude.php");
+//include("view/AuctionView.php");
 if (!isset($_GET['auctionid']))
 	{
 	header("location:index.php");
 	exit();
 	}
 $auction = auction::getAuction($_GET['auctionid']);
+$auctions = auction::getArtistAuctions($auction->getArtistName());
+//$artist = $auction->getName();
 if (!$auction)
 	{
 	header("location:Error.php?error=1");
@@ -19,5 +22,6 @@ $includes .= "<script type='text/javascript' src='js/lightbox/js/lightbox.js'></
 echoStart("Kreatif - ".$auction->getName(), $includes);
 include("view/AuctionView.php");
 echoAuctionPage($auction);
+echoAuctionTable($auctions);
 echoEnd();
 ?>
