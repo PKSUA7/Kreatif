@@ -30,7 +30,7 @@ function echoAuctionPage($auction)
 	echo "<div class='price'>".$auction->getPrice()." kr.</div>";
 	
 	echo "<h1 class='header'>".$auction->getName()."</h1>";
-	echo "<h6 class='artist'>Skabt af: ".$auction->getArtistName()."</h5>";
+	echoArtist($auction);
 	echoGallery($auction);
 	
 	echoAuctionTime($auction);
@@ -49,6 +49,14 @@ function echoAuctionPage($auction)
 	echo "</form>";
 	}
 
+function echoArtist($auction)
+	{
+	echo "<h6 class='artist'>Skabt af: ";
+	echo "<a href='artist.php?artist=".$auction->getArtistName()."'>";
+	echo $auction->getArtistName();
+	echo "</a></h6>";
+	}
+	
 function echoAuctionTime($auction)
 	{
 	$end = new DateTime($auction->getEndDate());

@@ -21,6 +21,9 @@ else
 			echo "En anden har måske budt lige inden dig.<br />";
 			echo "<a href='auction.php?auctionid=".$_GET['auctionid']."'>Klik her for at vende tilbage til auktionen.</a>";
 			break;
+		case 3:
+			echo "Kunstneren blev ikke fundet.";
+			break;	
 		}
 	}
 echo "</p>";
