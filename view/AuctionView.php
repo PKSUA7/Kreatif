@@ -115,4 +115,29 @@ function timeToString($h,$i,$s)
 	$time.=$s;
 	return $time;
 	}
+
+// Peter, bare lige så du ved det er mig der har gjort noget godt/skidt herfra ;)
+function echoAuctionRow($auction)
+{
+echo 	"<tr>";
+echo		"<td>" . $auction->getName() . "</td>";
+echo		"<td>" . $auction->getStartDate() . "</td>";
+echo		"<td>" . $auction->getEndDate() . "</td>";
+echo		"<td>" . $auction->getPrice() . "</td>";
+echo		"<td>" . $auction->getArtistName() . "</td>";
+echo	"</tr>";	
+}
+
+function echoAuctionTable($auctions){
+	
+	echo '<center><table border=1>
+						<tr><th>autionName</th>
+						<th>Start Date</th>
+						<th>End date</th>
+						<th>Start Price</th>
+						<th>Artist</th>
+		</center>';
+	array_map("echoAuctionRow", $auctions);
+	echo "</table>";	
+}
 ?>

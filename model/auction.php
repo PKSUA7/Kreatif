@@ -51,6 +51,32 @@ class auction
 		return $result;
 		}
 	
+	///peter
+	public static function getAllAuctions()
+	{
+		$resAll = mysql_query("SELECT auction_id AS id ".
+								"FROM auction ".
+								"ORDER BY end_date DESC");
+		$resultAll = array();
+		while($row = mysql_fetch_array($resAll)){
+			$resultAll[] = auction::getAuction($row['id']);
+		}
+		return $resultAll;
+	}	
+	
+	public static function getArtistAuctions($artist)
+	{
+		$artist= mysql_real_escape_string($artist);
+		$resAll = mysql_query("SELECT auction_id AS id ".
+								"FROM auction ".
+								"WHERE artist_name = '$artist' AND end_date>now() and start_date<now()");
+		$resultAll = array();
+		while($row = mysql_fetch_array($resAll)){
+			$resultAll[] = auction::getAuction($row['id']);
+		}
+		return $resultAll;
+	}	
+	
 	public function __construct($ID, $name, $startDate, $endDate,
 									$price, $description, $bidPercent,
 									$artist, $noBids)
