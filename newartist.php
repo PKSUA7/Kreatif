@@ -1,7 +1,7 @@
 <?php
 include("controller/MainInclude.php");
 include("controller/CreateArtist.php");
-if (!$_SESSION['user']->isAdmin())
+if (!isset($_SESSION['user']) || !$_SESSION['user']->isAdmin())
 	{
 	header("location:index.php");
 	exit();

@@ -1,0 +1,15 @@
+div.success
+	{
+	background: #AAFFAA;
+	color: #00AA00;
+	border: 1px solid #00FF00;
+	width:256px;
+	}
+
+div.error
+	{
+	background: #FFAAAA;
+	color: #AA0000;
+	border: 1px solid #FF0000;
+	width:256px;
+	}
