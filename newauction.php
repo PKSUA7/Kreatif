@@ -19,6 +19,8 @@ function makeNumberDropDown($name,$max)
 	
 function makeUploadField($num)
 	{
+	if ($num==0) {return;}
+	echo "Billeder: <br />";
 	echo "Front billede: <input name='pic[]' type='file'><br />";
 	for ($i=1;$i<$num;$i++)
 		{
@@ -62,7 +64,6 @@ klokken <?php makeNumberDropDown('startTime', 23)?>.<br />
 Slutter <?php makeNumberDropDown('endDay', 30)?> dage efter startdato, 
 klokken <?php makeNumberDropDown('endTime', 23)?>.<br />
 Kunstner: <?php makeArtistDropDown()?><br />
-Billeder: <br />
 <?php makeUploadField($_GET['pics']);?>
 <input type="submit" name="submit" value="Start auktion"/>
 </form>

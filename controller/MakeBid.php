@@ -8,10 +8,13 @@ include("MainInclude.php");
 $auction = mysql_real_escape_string($_GET['auctionid']);
 if (isset($_SESSION['user']))
 	{
+	mysql_query("START TRANSACTION");
+	mysql_query("LOCK TABLES bid WRITE");
 	$bid = mysql_real_escape_string($_POST['bidchoice']);
 	$res = mysql_query("SELECT amount FROM bid WHERE amount>='$bid' AND auction_id='$auction'");
 	if (mysql_num_rows($res)>0)
 		{
+		mysql_query("UNLOCK TABLES");
 		header("location:../Error.php?error=2&auctionid=$auction");
 		exit();
 		}
@@ -19,8 +22,11 @@ if (isset($_SESSION['user']))
 				" VALUES ('".$_SESSION['user']->getMail()."','$bid','$auction')");
 	if (!$res)
 		{
+		mysql_query("UNLOCK TABLES");
 		exit(mysql_error());
 		}
+	mysql_query("COMMIT");
+	mysql_query("UNLOCK TABLES");
 	}
 else
 	{
