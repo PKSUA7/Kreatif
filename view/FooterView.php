@@ -1,3 +1,3 @@
 <div class="footer">
-	test
+	Kreatif - 2012
 </div>

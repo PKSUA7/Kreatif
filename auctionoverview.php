@@ -13,5 +13,3 @@ echoAuctionTable($auctions);
 echoEnd();
 
 ?>
-
-<a href="index.php">back to index</a><br />
