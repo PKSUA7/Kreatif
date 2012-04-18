@@ -65,17 +65,23 @@ class auction
 	}	
 	
 	public static function getArtistAuctions($artist)
-	{
+		{
+		$all = false;
+		if (isset($_SESSION['user']) && $_SESSION['user']->isAdmin())
+			{
+			$all=true;
+			}
 		$artist= mysql_real_escape_string($artist);
 		$resAll = mysql_query("SELECT auction_id AS id ".
 								"FROM auction ".
-								"WHERE artist_name = '$artist' AND end_date>now() and start_date<now()");
+								"WHERE artist_name = '$artist'".
+								(!$all?" AND end_date>now() AND start_date<now()":""));
 		$resultAll = array();
 		while($row = mysql_fetch_array($resAll)){
 			$resultAll[] = auction::getAuction($row['id']);
 		}
 		return $resultAll;
-	}	
+		}	
 	
 	public function __construct($ID, $name, $startDate, $endDate,
 									$price, $description, $bidPercent,

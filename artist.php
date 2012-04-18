@@ -11,12 +11,20 @@ if (isset($_GET['artist']))
 		exit();
 		}
 	$row = mysql_fetch_array($res);
+	
+	include("view/AuctionView.php");
+	$auctions = auction::getArtistAuctions($row['artist_name']);
+	
 	$includes = "<link rel='stylesheet' type='text/css' href='css/artist.css' />";
 	echoStart("Kreatif - $row[artist_name]",$includes);
+	
 	echo "<img src='$row[picture_url]'/>";
 	echo "<h1 class='name'>$row[artist_name]</h1>";
 	echo "<br />";
 	echo $row['artist_desc'];
+	
+	echoAuctionTable($auctions);
+	
 	echoEnd();
 	}
 else
