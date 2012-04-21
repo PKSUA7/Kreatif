@@ -1,8 +1,8 @@
 <?php
 if (isset($_GET['artist']))
 	{
-	$artist = mysql_real_escape_string($_GET['artist']);
 	include("controller/MainInclude.php");
+	$artist = mysql_real_escape_string($_GET['artist']);
 	$res = mysql_query("SELECT artist_name, artist_desc,picture_url ".
 					"FROM artist WHERE artist_name='$artist'");
 	if (!$res || mysql_num_rows($res)==0)

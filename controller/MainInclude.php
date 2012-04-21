@@ -1,12 +1,14 @@
 <?php
-include("/ConnectDB.php");
-include("/../model/user.php");
-include("/../model/auction.php");
+include("ConnectDB.php");
+
+include(dirname(__DIR__)."/model/user.php");
+include(dirname(__DIR__)."/model/auction.php");
 session_start();
 /*$curUser = null;
 if (isset($_SESSION['user']))
 	{
 	$curUser = $_SESSION['user'];
 	}*/
-include("/../view/MainView.php");
+
+include(dirname(__DIR__)."/view/MainView.php");
 ?>

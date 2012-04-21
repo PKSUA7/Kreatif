@@ -1,5 +1,5 @@
 <?php
-include("/MainInclude.php");
+include("MainInclude.php");
 if (!isset($_GET['logout']))
 	{
 	if (isset($_POST['submit']))
