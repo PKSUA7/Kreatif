@@ -15,6 +15,8 @@ class user
 		if (!$res || mysql_num_rows($res)==0) {return false;}
 		$user = mysql_fetch_array($res);
 		if ($user['password']!=$password) {return false;}
+		$res2 = mysql_query("SELECT code FROM authentication WHERE mail = '$email'");
+		if (!$res2 || mysql_num_rows($res2)>0) {return false;}
 		return new user($user['mail'],$user['user_name'],$user['address'],$user['zip_code'],$user['is_admin']);
 		}
 	

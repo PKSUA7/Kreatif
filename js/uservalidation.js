@@ -1,3 +1,12 @@
+function checkAll()
+	{
+	usernameListener('username','usernameDiv');
+	mailListener('mail','mailDiv');
+	mailTwoListener('mail','mail2','mail2Div');
+	passwordListener('pass','passDiv');
+	passwordTwoListener('passtwo','pass','passtwoDIV');
+	}
+
 function usernameListener(ID,divID)
 	{
 	var input = document.getElementById(ID);
@@ -5,6 +14,12 @@ function usernameListener(ID,divID)
 	if (input.value=="")
 		{
 		div.innerHTML = "Indtast venligst dit navn";
+		div.setAttribute("class", "error");
+		return;
+		}
+	if (input.value.length<5)
+		{
+		div.innerHTML = "Dit brugernavn skal minimum indeholde 5 tegn";
 		div.setAttribute("class", "error");
 		return;
 		}
@@ -29,7 +44,7 @@ function mailListener(ID,divID)
 		div.setAttribute("class", "error");
 		return;
 		}
-	var re = new RegExp("^[a-zA-Z0-9_]+@([a-zA-Z0-9_]+[\.])+[a-zA-Z_]+");
+	var re = new RegExp("^[a-zA-Z0-9_]+@([a-zA-Z0-9_]+[\.])+[a-zA-Z_]+$");
 	if (!input.value.match(re))
 		{
 		div.innerHTML = "Din email adresse skal være på formen: eksempel@eksempel.fx";
