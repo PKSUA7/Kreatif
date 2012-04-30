@@ -30,10 +30,12 @@ $res = mysql_query("SELECT auction_id ".
 while ($row = mysql_fetch_row($res))
 	{
 	$subQuery = "SELECT mail FROM payment WHERE auction_id=$row[0]";
-	$res2 = mysql_query("SELECT * ".
+	$res2 = mysql_query("SELECT mail, amount ".
 						"FROM bid ".
 						"WHERE auction_id='$row[0]' ".
-						"AND mail NOT IN ($subQuery) ORDER BY amount LIMIT 1");
+						"AND mail NOT IN ($subQuery) ".
+						"ORDER BY amount DESC ".
+						"LIMIT 1");
 	if ($res2 && mysql_num_rows($res2)>0)
 		{
 		$bid = mysql_fetch_array($res2);
