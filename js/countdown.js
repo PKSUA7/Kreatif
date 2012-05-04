@@ -37,7 +37,7 @@ function countdown()
 			}
 		if (times[i].hour<0)
 			{
-			times[i].hour=24;
+			times[i].hour=23;
 			times[i].day--;
 			}
 		if (times[i].day<0)
