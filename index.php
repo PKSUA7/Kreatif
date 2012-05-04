@@ -5,6 +5,7 @@
 //test
 include("controller/MainInclude.php");
 $includes = "<link rel=\"stylesheet\" type=\"text/css\" href=\"css/auction.css\" />";
+$includes .= "<script type='text/javascript' src='js/countdown.js'></script>";
 echoStart("Kreatif - Index", $includes);
 $auctions = auction::getAuctions();
 if (count($auctions)==0)
@@ -17,4 +18,5 @@ else
 	echoAuctionBoxes($auctions);
 	}
 echoEnd();
+echo "<script type='text/javascript'>initCountdown()</script>";
 ?>

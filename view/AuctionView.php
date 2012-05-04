@@ -11,7 +11,7 @@ function echoAuctionBox($auction)
 	echo $auction->getPrice()." kr.<br />";
 	echo "Udløber: <br />";
 	echo "<div class='timebox'>";
-	echo getTimeLeft($auction);
+	echoAuctionTimeField($auction);
 	echo "</div>";
 	echo "</div></a>";
 	}
@@ -62,13 +62,28 @@ function echoArtist($auction)
 	
 function echoAuctionTime($auction)
 	{
-	$end = new DateTime($auction->getEndDate());
-	$diff = $end->diff(new DateTime());
 	echo "<div class='maintimebox'>";
 	echo "Udløber: <br />";
+	$expired=echoAuctionTimeField($auction);
+	echo "</div>";
+	return $expired;
+	}
+	
+function echoAuctionTimeField($auction)
+	{
+	$end = new DateTime($auction->getEndDate());
+	$diff = $end->diff(new DateTime());
+	$divID="Time".$auction->getID();
+	echo "<div id='$divID'>";
 	$timeLeft=getTimeLeft($auction);
 	echo $timeLeft;
 	echo "</div>";
+	if ($timeLeft!="Udløbet")
+		{
+		echo "<script type='text/javascript'>";
+		echo "addTime(".$diff->d.",".$diff->h.",".$diff->i.",".$diff->s.",'$divID')";
+		echo "</script>";
+		}
 	return $timeLeft!="Udløbet";
 	}
 	
@@ -130,11 +145,11 @@ function getTimeLeft($auction)
 function timeToString($h,$i,$s)
 	{
 	$time = "";
-	if ($h<9) {$time.="0";}
+	if ($h<10) {$time.="0";}
 	$time.=$h.":";
-	if ($i<9) {$time.="0";}
+	if ($i<10) {$time.="0";}
 	$time.=$i.":";
-	if ($s<9) {$time.="0";}
+	if ($s<10) {$time.="0";}
 	$time.=$s;
 	return $time;
 	}

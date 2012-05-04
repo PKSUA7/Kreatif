@@ -18,9 +18,11 @@ $includes .= "<link rel='stylesheet' href='js/lightbox/css/lightbox.css' type='t
 $includes .= "<script type='text/javascript' src='js/lightbox/js/prototype.js'></script>";
 $includes .= "<script type='text/javascript' src='js/lightbox/js/scriptaculous.js?load=effects,builder'></script>";
 $includes .= "<script type='text/javascript' src='js/lightbox/js/lightbox.js'></script>";
+$includes .= "<script type='text/javascript' src='js/countdown.js'></script>";
 echoStart("Kreatif - ".$auction->getName(), $includes);
 
 echoAuctionPage($auction);
 
 echoEnd();
+echo "<script type='text/javascript'>initCountdown()</script>";
 ?>
