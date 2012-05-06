@@ -5,14 +5,35 @@ if (!isset($_SESSION['user']) || !$_SESSION['user']->isAdmin())
 	header("location:index.php");
 	exit();
 	}
+require_once('view/calendar/classes/tc_calendar.php');
 include("controller/CreateAuction.php");
+$today = new DateTime();
 
-function makeNumberDropDown($name,$max)
+function makeNumberDropDown($name, $max)
 	{
 	echo "<select name='$name'>";
 	for ($i=0;$i<=$max;$i++)
 		{
 		echo "<option value='$i'>$i</option>";
+		}
+	echo "</select>";
+	}
+
+function makeHourDropDown($name)
+	{
+	global $today;
+	$max = 23;
+	echo "<select name='$name'>";
+	for ($i=0;$i<=$max;$i++)
+		{
+		if ($today->format("H")==$i)
+			{
+			echo "<option value='$i:00:00' selected='selected'>$i:00</option>";
+			}
+		else
+			{
+			echo "<option value='$i:00:00'>$i:00</option>";
+			}
 		}
 	echo "</select>";
 	}
@@ -40,7 +61,9 @@ function makeArtistDropDown()
 	echo "</select>";
 	}
 	
-echoStart("Kreatif - Ny auktion");
+$includes = "<script language='javascript' src='view/calendar/calendar.js'></script>";	
+
+echoStart("Kreatif - Ny auktion", $includes);
 
 if ($fail)
 	{
@@ -59,10 +82,41 @@ Produktnavn: <input type="text" value="Ny auktion" name="productName"/><br />
 Start pris: <input type="text" value="50" name="startPrice"/> kr.-<br />
 Procent per bud: <input type="text" value="10" name="bidPercent"/>%<br />
 Buyout: <input type="text" name="buyout"/>(Efterlad feltet tomt hvis buyout ikke skal være muligt)<br />
-Starter om <?php makeNumberDropDown('startDay', 30)?> dage, 
+<?php /*Starter om <?php makeNumberDropDown('startDay', 30)?> dage, 
 klokken <?php makeNumberDropDown('startTime', 23)?>.<br />
 Slutter <?php makeNumberDropDown('endDay', 30)?> dage efter startdato, 
-klokken <?php makeNumberDropDown('endTime', 23)?>.<br />
+klokken <?php makeNumberDropDown('endTime', 23)?>.<br /> */ ?>
+
+Start tid:<br/> 
+<?php 
+//instantiate class and set properties
+$myCalendar = new tc_calendar("startDay", true);
+$myCalendar->setIcon("view/calendar/images/iconCalendar.gif");
+$myCalendar->setPath("view/calendar/");
+$myCalendar->setDate($today->format("d"), $today->format("m"), $today->format("Y"));
+
+//output the calendar
+$myCalendar->writeScript();
+echo " - klokken ";
+makeHourDropDown("startTime");
+?>
+<br/>
+
+Slut tid:<br/> 
+<?php 
+//instantiate class and set properties
+$myCalendar = new tc_calendar("endDay", true);
+$myCalendar->setIcon("view/calendar/images/iconCalendar.gif");
+$myCalendar->setPath("view/calendar/");
+$myCalendar->setDate($today->format("d"), $today->format("m"), $today->format("Y"));
+
+//output the calendar
+$myCalendar->writeScript();
+echo " - klokken ";
+makeHourDropDown("endTime");
+?>
+<br/>
+
 Kunstner: <?php makeArtistDropDown()?><br />
 <?php makeUploadField($_GET['pics']);?>
 <input type="submit" name="submit" value="Start auktion"/>

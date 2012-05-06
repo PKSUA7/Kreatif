@@ -2,13 +2,8 @@
 $fail=false;
 if (isset($_POST['submit']))
 	{
-	$startTime = "NOW()-TIME(NOW()) ".
-				"+ INTERVAL $_POST[startDay] DAY ".
-				"+ INTERVAL $_POST[startTime] HOUR";
-	$endTime = "NOW()-TIME(NOW()) ".
-				"+ INTERVAL $_POST[startDay] DAY ".
-				"+ INTERVAL $_POST[endDay] DAY ".
-				"+ INTERVAL $_POST[endTime] HOUR";
+	$startTime = "$_POST[startDay] $_POST[startTime]";
+	$endTime = "$_POST[endDay] $_POST[endTime]";
 	$name = mysql_real_escape_string($_POST['productName']);
 	$desc = mysql_real_escape_string($_POST['productDesc']);
 	$artist = mysql_real_escape_string($_POST['artistName']);
@@ -19,7 +14,7 @@ if (isset($_POST['submit']))
 	$res = mysql_query("INSERT INTO auction(start_date, end_date, start_price, ".
 				"bid_percent, buy_out_price, product_name, product_desc, artist_name) ".
 				"VALUES ".
-				"($startTime,$endTime,'$startPrice','$percent',".
+				"('$startTime','$endTime','$startPrice','$percent',".
 				(empty($buyout)?"NULL":"'$buyout'").
 				",'$name','$desc','$artist')");
 	if (!$res)
