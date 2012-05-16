@@ -51,18 +51,3 @@ div.price
 	float:right;
 	padding:4px;
 	}
-
-th
-	{
-	background:#2288AA;
-	}
-
-tr.one
-	{
-	background:#FFFFFF;
-	}
-
-tr.two
-	{
-	background:#88AAFF;
-	}

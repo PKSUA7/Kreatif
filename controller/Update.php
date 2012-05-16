@@ -49,5 +49,8 @@ mysql_query("UPDATE payment ".
 					"SET status='Afvist' ".
 					"WHERE status='Venter' ".
 					"AND date+INTERVAL 3 DAY<now()");
-echo mysql_error();
+if (isset($_GET['redirect']))
+	{
+	header("location:../index.php");
+	}
 ?>
