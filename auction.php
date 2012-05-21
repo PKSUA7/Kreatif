@@ -14,6 +14,7 @@ if (!$auction)
 	exit();
 	}
 $includes = "<link rel=\"stylesheet\" type=\"text/css\" href=\"css/auction.css\" />";
+$includes .= "<link rel='stylesheet' type='text/css' href='css/tables.css' />";
 $includes .= "<link rel='stylesheet' href='js/lightbox/css/lightbox.css' type='text/css' media='screen' />";
 $includes .= "<script type='text/javascript' src='js/lightbox/js/prototype.js'></script>";
 $includes .= "<script type='text/javascript' src='js/lightbox/js/scriptaculous.js?load=effects,builder'></script>";
