@@ -34,7 +34,11 @@ if (isset($_POST['submit']))
 	$string = randomString(64);
 	mysql_query("INSERT INTO authentication(mail, code) VALUES ('$mail','$string')");
 	//Send registrerings link til bruger og henvis til side omkring successfuld oprettelse
-	header("location:authenticate.php?code=$string");
+	sendMail($mail, "Tillykke! Du har nu oprettet en bruger konto hos Kreatif.<br/>".
+					"For at aktivere kontoen skal du trykke <a href='authenticate.php?auth=$string&mail=$mail'>her</a> ".
+					"eller benytte dig af koden:<br/>".$string.
+					"<br/>på siden hvor du netop har registreret din bruger.", "Bruger aktivering");
+	header("location:authenticate.php?mail=$mail");
 	exit();
 	}
 ?>

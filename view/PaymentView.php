@@ -19,7 +19,26 @@ function echoPaymentRow($payment, $style)
 		
 		echo "<td>".$payment->getVerboseStatus()."</td>";
 		
+		echo "<td>";
+		echoActions($payment);
+		echo "</td>";
+		
 	echo "</tr>";	
+	}
+	
+function echoActions($payment)
+	{
+	if ($payment->getMail()==$_SESSION['user']->getMail() &&
+		$payment->getStatus()=="Venter")
+		{
+		echo "<a href='payment.php?paymentid=".$payment->getID().
+				"'>Betal</a>";
+		}
+	else
+		{
+		echo "<a href='paymentdetails.php?paymentid=".$payment->getID().
+				"'>Se detaljer</a>";
+		}
 	}
 
 function echoPaymentTable($payments)
@@ -37,6 +56,7 @@ function echoPaymentTable($payments)
 							<th>Dato</th>
 							<th>Beløb</th>
 							<th>Status</th>
+							<th>Handling</th>
 						</tr>";
 	$i=0;
 	foreach ($payments as $payment)

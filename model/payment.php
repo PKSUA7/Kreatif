@@ -8,11 +8,15 @@ class payment
 	private $date;
 	private $status;
 	private $amount;
+	private $realName;
+	private $zip;
+	private $address;
+	private $city;
 	
 	public static function getPayment($reference)
 		{
 		$reference = mysql_real_escape_string($reference);
-		$res = mysql_query("SELECT reference, mail, auction_id, date, status, amount ".
+		$res = mysql_query("SELECT * ".
 							"FROM payment ".
 							"WHERE reference='$reference'");
 		if ($res && mysql_num_rows($res)>0)
@@ -20,7 +24,8 @@ class payment
 			$payment = mysql_fetch_array($res);
 			return new payment($payment['reference'],$payment['mail'],
 								$payment['auction_id'],$payment['status'],
-								$payment['amount'],$payment['date']);
+								$payment['amount'],$payment['date'],$payment['real_name'],
+								$payment['zip_code'], $payment['address'], $payment['city']);
 			}
 		else
 			{
@@ -66,9 +71,9 @@ class payment
 			}
 		return false;
 		}
-	
+		
 	public function __construct($ID, $mail, $auctionID, $status, $amount,
-									$date)
+									$date, $realName, $zip, $address, $city)
 		{
 		$this->ID = $ID;
         $this->mail = $mail;
@@ -76,6 +81,10 @@ class payment
 		$this->date = $date;
 		$this->status = $status;
 		$this->amount = $amount;
+		$this->realName = $realName;
+		$this->zip = $zip;
+		$this->address = $address;
+		$this->city = $city;
 		}
 	
 	public function getID()
@@ -103,6 +112,56 @@ class payment
 		return $this->status;
 		}
 		
+	public function getFullAddress()
+		{
+		if ($this->zip==null)
+			{
+			return "Ingen modtager information";
+			}
+		else
+			{
+			return $this->realName."<br/>".
+					$this->address."<br/>".
+				  	$this->zip." ".$this->city."<br/>".
+				  	"Danmark";
+				   
+			}
+		}
+	
+	public function getZip()
+		{
+		return $this->zip==null?"":$this->zip;
+		}	
+	
+	public function getAddress()
+		{
+		return $this->address;
+		}
+		
+	public function getRealName()
+		{
+		return $this->realName;
+		}
+		
+	public function getCity()
+		{
+		return $this->city;
+		}	
+	
+	public function setAddres($realName,$address,$zip,$city)
+		{
+		$this->realName = mysql_real_escape_string($realName);
+		$this->address = mysql_real_escape_string($address);
+		$this->zip = mysql_real_escape_string($zip);
+		$this->city = mysql_real_escape_string($city);
+		mysql_query("UPDATE payment ".
+					"SET real_name='$this->realName', ".
+					"address='$this->address', ".
+					"zip_code='$this->zip', ".
+					"city='$this->city' ".
+					"WHERE reference='".$this->getID()."'");
+		}
+	
 	public function getVerboseStatus()
 		{
 		switch ($this->status)

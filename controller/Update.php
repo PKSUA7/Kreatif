@@ -1,13 +1,14 @@
 <?php
 //Find auktioner der er afsluttede, har bud og ikke er tilknyttet en betaling
 include("MainInclude.php");
-$res = mysql_query("SELECT auction_id ".
+$res = mysql_query("SELECT auction_id, product_name ".
 					"FROM auction ".
 					"WHERE end_date<now() ".
 					"AND auction_id IN (SELECT auction_id FROM bid) ".
 					"AND auction_id NOT IN (SELECT auction_id FROM payment)");
 
 //Opret betaling på fundne auktioner og tildel højst bydende
+
 while ($row = mysql_fetch_row($res))
 	{
 	$res2 = mysql_query("SELECT mail, amount ".
@@ -16,9 +17,11 @@ while ($row = mysql_fetch_row($res))
 						"ORDER BY amount DESC ".
 						"LIMIT 1");
 	$row2 = mysql_fetch_array($res2);
-	mysql_query("INSERT INTO payment(mail, auction_id, amount, address, zip_code, status) ".
-				"VALUES ('$row2[mail]','$row[0]','$row2[amount]','','','Venter')");
-	//Send mail til byder her
+	mysql_query("INSERT INTO payment(mail, auction_id, amount, status) ".
+				"VALUES ('$row2[mail]','$row[0]','$row2[amount]','Venter')");
+	
+	sendMail($row2['mail'], "Tillykke! Du har vundet en auktion for $row[1]. ".
+							"Varen skal betales senest om 3 dage.","Vundet auktion");
 	}	
 //Find udløbede betalinger
 $res = mysql_query("SELECT auction_id ".
@@ -39,8 +42,8 @@ while ($row = mysql_fetch_row($res))
 	if ($res2 && mysql_num_rows($res2)>0)
 		{
 		$bid = mysql_fetch_array($res2);
-		mysql_query("INSERT INTO payment(mail, auction_id, amount, address, zip_code, status) ".
-				"VALUES ('$bid[mail]','$row[0]','$bid[amount]','','','Venter')");
+		mysql_query("INSERT INTO payment(mail, auction_id, amount, status) ".
+				"VALUES ('$bid[mail]','$row[0]','$bid[amount]','Venter')");
 		}
 	}
 
