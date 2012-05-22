@@ -1,4 +1,40 @@
 <?php
+function echoPaymentInfo($payment)
+	{
+	$auction = $payment->getAuction();
+	
+	echo "<div class='shippinginfo'>";
+	echo "<h4>Modtager adresse:</h4>";
+	echo $payment->getFullAddress();
+	echo "</div>";
+	
+	echo "<div class='priceinfo'>";
+	echo "<h4>Produkt:</h4>";
+	echo "<table BORDER=1 CELLPADDING=3 CELLSPACING=1 
+    			RULES=COLS FRAME=BOX>
+						<tr>";
+	echo "<tr><td>".$auction->getName()."</td><td>".$payment->getAmount()." kr.</td></tr>";
+	echo "<tr><td>Ialt</td><td>".$payment->getAmount()." kr.</td></tr>";
+	
+	echo "</table></div>";
+	}
+
+function echoPaymentSteps($active)
+	{
+	echo "<div class='";
+	echo $active==0?"activestep":"inactivestep";
+	echo "'>Modtager adresse</div>";
+	
+	echo "<div class='";
+	echo $active==1?"activestep":"inactivestep";
+	echo "'>Godkendelse</div>";
+	
+	echo "<div class='";
+	echo $active==2?"activestep":"inactivestep";
+	echo "'>Betaling</div>";
+	echo "<br/>";
+	}
+
 function echoPaymentRow($payment, $style)
 	{
 	$auction = $payment->getAuction();

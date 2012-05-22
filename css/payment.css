@@ -1,0 +1,29 @@
+div.priceinfo
+	{
+	float:right;
+	}
+
+div.shippinginfo
+	{
+	float:left;
+	}
+	
+div.activestep
+	{
+	background:#88AAFF;
+	border: 1px solid black;
+	margin-right:8px;
+	font-size:large;
+	float:left;
+	width:33%;
+	}
+
+div.inactivestep
+	{
+	background:#AAAAAA;
+	border: 1px solid black;
+	margin-right:8px;
+	font-size:large;
+	float:left;
+	width:25%;
+	}

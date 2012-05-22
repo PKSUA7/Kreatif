@@ -150,6 +150,7 @@ class payment
 	
 	public function setAddres($realName,$address,$zip,$city)
 		{
+		if (!$zip) {return false;}
 		$this->realName = mysql_real_escape_string($realName);
 		$this->address = mysql_real_escape_string($address);
 		$this->zip = mysql_real_escape_string($zip);
@@ -160,6 +161,7 @@ class payment
 					"zip_code='$this->zip', ".
 					"city='$this->city' ".
 					"WHERE reference='".$this->getID()."'");
+		return true;
 		}
 	
 	public function getVerboseStatus()
@@ -189,7 +191,9 @@ class payment
 	public function setStatus($newStatus)
 		{
 		$newStatus = mysql_real_escape_string($newStatus);
-		$res = mysql_query("UPDATE payment set status='$newStatus'");
+		$res = mysql_query("UPDATE payment ".
+						"SET status='$newStatus' ".
+						"WHERE reference='".$this->getID()."'");
 		if ($res)
 			{
 			$this->status = $newStatus;
