@@ -32,7 +32,7 @@ if (isset($_GET['paymentid']) && isset($_SESSION['user']))
 				{
 				$payment->setStatus("Afsendt");
 				sendMail($payment->getMail(), "Kreatif har netop afsendt din ordre.<br/> ".
-											"Track%amp;trace nummeret er $_POST[track].",
+											"Track&amp;trace nummeret er $_POST[track].",
 											"Varen er afsendt");
 				}
 			echo "<br/><br/><br/><br/><br/><br/><br/>";
