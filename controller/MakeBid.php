@@ -15,7 +15,7 @@ if (isset($_SESSION['user']))
 	if (mysql_num_rows($res)>0)
 		{
 		mysql_query("UNLOCK TABLES");
-		header("location:../Error.php?error=2&auctionid=$auction");
+		header("location:../error.php?error=2&auctionid=$auction");
 		exit();
 		}
 	$res = mysql_query("INSERT INTO bid(mail, amount, auction_id)".
