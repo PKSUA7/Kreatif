@@ -44,7 +44,7 @@ function mailListener(ID,divID)
 		div.setAttribute("class", "error");
 		return;
 		}
-	var re = new RegExp("^[a-zA-Z0-9_]+@([a-zA-Z0-9_]+[\.])+[a-zA-Z_]+$");
+	var re = new RegExp("^[a-zA-Z0-9_.-]+@([a-zA-Z0-9_]+[\.])+[a-zA-Z_]+$");
 	if (!input.value.match(re))
 		{
 		div.innerHTML = "Din email adresse skal være på formen: eksempel@eksempel.fx";

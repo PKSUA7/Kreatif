@@ -21,7 +21,7 @@ if (isset($_POST['submit']))
 	if ($mail!=$_POST['mailtwo']) {return;}
 	if ($password!=$_POST['passtwo']) {return;}
 	if (strlen($password)<8) {return;}
-	if (!preg_match("/^\w+@(\w+.)+\w+/", $mail)) {return;}
+	if (!preg_match("/^[a-zA-Z0-9_.-]+@([a-zA-Z0-9_]+[\.])+[a-zA-Z_]+$/", $mail)) {return;}
 	if (!preg_match("/^([A-Za-z]| )+$/",$username)) {return;}
 	if (!preg_match("/^([A-Za-z0-9\!\-\_\,\.\?])+/",$password)) {return;}
 	if (!preg_match("/([A-Z])+/",$password)) {return;}
